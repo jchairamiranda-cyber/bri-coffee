@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#0A0A0A"/>
+  <!-- Coffee tamper silhouette inspired by BRIG logo -->
+  <path d="M32 14 v10 M32 14 q-6 0 -6 -4 M22 28 h20 v6 a4 4 0 0 1 -4 4 H26 a4 4 0 0 1 -4 -4 z" stroke="#F5EFE6" stroke-width="3" fill="#F5EFE6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="32" y="56" text-anchor="middle" fill="#F5EFE6" font-family="Inter, sans-serif" font-weight="900" font-size="10" letter-spacing="1">BRIG</text>
+</svg>

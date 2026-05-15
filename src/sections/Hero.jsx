@@ -7,12 +7,12 @@ import { hero } from '@/data/content';
 /**
  * Hero — first impression, primary conversion zone.
  *
- * Conversion stack:
- *   1. Eyebrow → tells city + category fast
- *   2. Big headline → emotional hook
- *   3. Subheadline → clarifies offer + intensity option
- *   4. Two CTAs → primary (WhatsApp = $$$), secondary (Menu)
- *   5. Highlights bar → trust signals at a glance
+ * Mobile-first treatment:
+ *  - Compact eyebrow + tight headline at 38–44px (320–430px screens).
+ *  - Single-column layout below lg:; visual hidden on the smallest phones
+ *    so copy + CTAs fit above the fold.
+ *  - Both CTAs are full-width on mobile with ≥ 48px height.
+ *  - Trust strip wraps cleanly into 3 columns on phones.
  */
 export default function Hero() {
   const ref = useScrollReveal();
@@ -23,8 +23,8 @@ export default function Hero() {
       id="top"
       className="
         relative isolate overflow-hidden
-        pt-[calc(var(--header-h)+24px)] pb-16
-        sm:pt-[calc(var(--header-h)+40px)] sm:pb-24
+        pt-[calc(var(--header-h)+16px)] pb-12
+        sm:pt-[calc(var(--header-h)+32px)] sm:pb-20
         lg:pt-[calc(var(--header-h)+64px)] lg:pb-32
         bg-brand-cream
       "
@@ -42,30 +42,37 @@ export default function Hero() {
       />
 
       <div ref={ref} className="reveal container-x">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-10 items-center">
           {/* Copy */}
           <div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6 text-center lg:text-left items-center lg:items-start">
-            <span className="eyebrow !text-brand-mocha">
-              {hero.eyebrow}
-            </span>
+            <span className="eyebrow !text-brand-mocha">{hero.eyebrow}</span>
 
-            <h1 className="h-display text-[44px] leading-[0.95] sm:text-6xl lg:text-[80px] text-brand-ink">
+            <h1
+              className="
+                h-display
+                text-[40px] leading-[0.96]
+                xs:text-[44px]
+                sm:text-6xl
+                lg:text-[80px]
+                text-brand-ink
+              "
+            >
               {hero.headline}
             </h1>
 
-            <p className="lead max-w-xl">
+            <p className="lead max-w-xl text-[15px] sm:text-lg">
               {hero.subheadline}
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto pt-2">
+            {/* CTAs — full width on mobile, inline ≥ sm */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-1 sm:pt-2">
               <Button
                 variant="whatsapp"
                 size="lg"
                 href={openExplore()}
                 external
                 icon={<WhatsAppIcon />}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto !min-h-14"
               >
                 {hero.ctaPrimary}
               </Button>
@@ -74,29 +81,39 @@ export default function Hero() {
                 size="lg"
                 href="#menu"
                 iconRight={<ArrowRightIcon />}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto !min-h-14"
               >
                 {hero.ctaSecondary}
               </Button>
             </div>
 
             {/* Trust strip */}
-            <ul className="
-              flex flex-wrap justify-center lg:justify-start
-              gap-x-5 gap-y-2 pt-6 sm:pt-8
-              text-sm text-brand-coffee/80
-            ">
+            <ul
+              className="
+                grid grid-cols-3 gap-2 sm:flex sm:flex-wrap
+                w-full sm:w-auto
+                justify-items-center sm:justify-center lg:justify-start
+                gap-x-5 gap-y-2
+                pt-5 sm:pt-7
+                text-xs sm:text-sm text-brand-coffee/80
+              "
+            >
               {hero.highlights.map((h) => (
-                <li key={h.label} className="inline-flex items-center gap-1.5">
-                  <span aria-hidden className="text-base">{h.icon}</span>
-                  <span className="font-medium">{h.label}</span>
+                <li
+                  key={h.label}
+                  className="inline-flex items-center gap-1.5 text-center"
+                >
+                  <span aria-hidden className="text-base">
+                    {h.icon}
+                  </span>
+                  <span className="font-medium leading-tight">{h.label}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Logo / visual */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          {/* Visual — show smaller on mobile, full size on desktop */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end order-first lg:order-last">
             <HeroVisual />
           </div>
         </div>
@@ -111,7 +128,13 @@ export default function Hero() {
  */
 function HeroVisual() {
   return (
-    <div className="relative w-[280px] sm:w-[360px] lg:w-[420px] aspect-square flex items-center justify-center">
+    <div
+      className="
+        relative
+        w-[200px] xs:w-[240px] sm:w-[320px] lg:w-[420px]
+        aspect-square flex items-center justify-center
+      "
+    >
       {/* Glow ring */}
       <div
         aria-hidden
@@ -143,7 +166,7 @@ function Steam() {
   return (
     <svg
       aria-hidden
-      className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-24 opacity-60"
+      className="absolute top-2 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-20 sm:h-24 opacity-60"
       viewBox="0 0 100 100"
     >
       <g
@@ -153,9 +176,21 @@ function Steam() {
         strokeLinecap="round"
         fill="none"
       >
-        <path d="M30 80 q-6 -16 0 -32 q6 -16 0 -32" className="animate-steam" style={{ animationDelay: '0s' }} />
-        <path d="M50 80 q6 -16 0 -32 q-6 -16 0 -32" className="animate-steam" style={{ animationDelay: '0.7s' }} />
-        <path d="M70 80 q-6 -16 0 -32 q6 -16 0 -32" className="animate-steam" style={{ animationDelay: '1.4s' }} />
+        <path
+          d="M30 80 q-6 -16 0 -32 q6 -16 0 -32"
+          className="animate-steam"
+          style={{ animationDelay: '0s' }}
+        />
+        <path
+          d="M50 80 q6 -16 0 -32 q-6 -16 0 -32"
+          className="animate-steam"
+          style={{ animationDelay: '0.7s' }}
+        />
+        <path
+          d="M70 80 q-6 -16 0 -32 q6 -16 0 -32"
+          className="animate-steam"
+          style={{ animationDelay: '1.4s' }}
+        />
       </g>
     </svg>
   );

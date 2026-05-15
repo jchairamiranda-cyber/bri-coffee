@@ -9,7 +9,8 @@
 export const business = {
   name: 'BRIG Coffee',
   tagline: 'Café funcional preparado al momento',
-  city: 'Tarija',
+  city: 'San Julián',
+  region: 'Santa Cruz',
   country: 'Bolivia',
   currency: 'Bs',
 };
@@ -19,21 +20,31 @@ export const contact = {
   whatsappNumber: '59171368659',
   // Pretty format, used for display only.
   whatsappDisplay: '+591 71368659',
-  instagram: {
-    handle: '@briDXN',
-    url: 'https://instagram.com/briDXN',
+
+  social: {
+    instagram: {
+      handle: '@briDXN',
+      url: 'https://instagram.com/briDXN',
+    },
+    tiktok: {
+      handle: '@brigidamirandadxn',
+      displayName: 'bri DXN',
+      url: 'https://www.tiktok.com/@brigidamirandadxn',
+    },
   },
+
   address: {
-    line: 'Mercado Municipal — pasillo Tarija, caseta N330',
-    city: 'Tarija, Bolivia',
-    // Replace with actual coordinates if you want to embed a map
-    mapsQuery: 'Mercado+Municipal+Tarija+Bolivia',
+    line1: 'Mercado Municipal — pasillo Tarija, caseta N330',
+    line2: 'San Julián, Santa Cruz, Bolivia',
+    // Real Google Maps short link — opens directly to BRIG location
+    mapsUrl: 'https://maps.app.goo.gl/RiptwUhjBuAs413H9',
+    // Used for the embedded iframe (search query fallback)
+    mapsQuery: 'Mercado+Municipal+San+Julian+Santa+Cruz+Bolivia',
   },
 };
 
 export const hours = [
-  { days: 'Lunes – Sábado', time: '08:00 – 20:00' },
-  { days: 'Domingo', time: '09:00 – 14:00' },
+  { days: 'Lunes a Domingo', time: '08:00 – 18:00' },
 ];
 
 /**

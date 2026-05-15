@@ -7,7 +7,12 @@
 /* ------------------------------------------------------------------ */
 @layer base {
   :root {
-    --header-h: 64px;
+    --header-h: 60px;
+  }
+  @media (min-width: 640px) {
+    :root {
+      --header-h: 64px;
+    }
   }
 
   html {
@@ -19,11 +24,13 @@
   body {
     @apply bg-brand-cream text-brand-ink font-body;
     font-feature-settings: 'cv11', 'ss01', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Section anchor offset so navbar doesn't cover headings */
   section[id] {
-    scroll-margin-top: var(--header-h);
+    scroll-margin-top: calc(var(--header-h) + 8px);
   }
 
   /* Better focus visibility — accessibility first */
@@ -40,6 +47,11 @@
   img {
     @apply select-none;
   }
+
+  /* Improve tap highlight on iOS / Android */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -47,7 +59,7 @@
 /* ------------------------------------------------------------------ */
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-container px-5 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
   }
 
   .eyebrow {
@@ -56,7 +68,7 @@
 
   .eyebrow::before {
     content: '';
-    @apply h-px w-8 bg-brand-mocha;
+    @apply h-px w-8 bg-brand-mocha shrink-0;
   }
 
   .h-display {
@@ -90,6 +102,15 @@
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Hide horizontal scrollbar on filter chip rows */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 
   /* Respect reduced motion */

@@ -11,7 +11,7 @@
  */
 
 export const hero = {
-  eyebrow: 'Café funcional · Tarija',
+  eyebrow: 'Café funcional · San Julián',
 
   // Three options — currently using #1. Change export to switch.
   headlineOptions: [
@@ -22,7 +22,7 @@ export const hero = {
   headline: 'Cada café, una experiencia que te despierta diferente.',
 
   subheadline:
-    'Cappuccinos preparados al momento con ingredientes funcionales DXN. Suaves o intensos, a tu medida. En el corazón del Mercado Municipal de Tarija.',
+    'Cappuccinos preparados al momento con ingredientes funcionales DXN. Suaves o intensos, a tu medida — pedís y lo tenés listo en minutos.',
 
   // CTA labels
   ctaPrimary: 'Pedir por WhatsApp',
@@ -32,13 +32,13 @@ export const hero = {
   highlights: [
     { label: 'Recién preparado', icon: '☕' },
     { label: 'Suave o intenso', icon: '⚡' },
-    { label: 'Ingredientes funcionales', icon: '🌿' },
+    { label: '100% DXN', icon: '🌿' },
   ],
 };
 
 export const menuSection = {
   eyebrow: 'Menú completo',
-  headline: 'Elige tu café. Elige tu intensidad.',
+  headline: 'Elegí tu café. Elegí tu intensidad.',
   description:
     'Cada bebida se prepara en dos versiones. *Suave* con media dosis para un sabor sutil. *Intenso* con dosis completa para todo el efecto.',
   filtersLabel: 'Filtrar por categoría',
@@ -48,7 +48,7 @@ export const about = {
   eyebrow: '¿Por qué DXN?',
   headline: 'No es solo café. Es café con propósito.',
   paragraphs: [
-    'DXN es una empresa pionera mundial en cultivo orgánico de Ganoderma (Reishi), Cordyceps, Espirulina y otros superalimentos. Sus extractos se integran a cada uno de nuestros cappuccinos sin alterar el sabor que ya amas.',
+    'DXN es una empresa pionera mundial en cultivo orgánico de Ganoderma (Reishi), Cordyceps, Espirulina y otros superalimentos. Sus extractos se integran a cada uno de nuestros cappuccinos sin alterar el sabor que ya amás.',
     'El resultado: un café que disfrutás igual o mejor, pero que además aporta energía limpia, antioxidantes y nutrientes funcionales con cada taza.',
   ],
   benefits: [
@@ -81,11 +81,11 @@ export const differentiators = {
   items: [
     {
       title: 'Preparado al momento',
-      desc: 'Cada bebida se prepara cuando la pides. Nada de termos, nada de pre-hecho. Calidad en cada sorbo.',
+      desc: 'Cada bebida se prepara cuando la pedís. Nada de termos, nada de pre-hecho. Calidad en cada sorbo.',
       icon: 'clock',
     },
     {
-      title: 'Tú eliges la intensidad',
+      title: 'Vos elegís la intensidad',
       desc: 'Suave para una experiencia ligera. Intenso para todo el sabor y efecto. Tu café, tu medida.',
       icon: 'tune',
     },
@@ -95,8 +95,8 @@ export const differentiators = {
       icon: 'mushroom',
     },
     {
-      title: 'Hecho en Tarija',
-      desc: 'Negocio local, atendido con cariño. Apoyas a tu ciudad con cada pedido.',
+      title: 'Hecho en San Julián',
+      desc: 'Negocio local, atendido con cariño. Apoyás a tu comunidad con cada pedido.',
       icon: 'pin',
     },
   ],
@@ -106,7 +106,8 @@ export const location = {
   eyebrow: 'Visitanos',
   headline: 'Dónde encontrarnos.',
   ctaText: 'Pedir ahora por WhatsApp',
-  delivery: 'También coordinamos pedidos por WhatsApp y entregas en Tarija.',
+  delivery:
+    'También coordinamos pedidos por WhatsApp. Escribinos antes de pasar y lo tenés listo.',
 };
 
 export const footer = {

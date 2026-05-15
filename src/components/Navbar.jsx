@@ -6,7 +6,7 @@ import { footer } from '@/data/content';
 
 /**
  * Navbar — sticky, transparent at top, solid on scroll.
- * Mobile: hamburger -> full-screen sheet.
+ * Mobile: hamburger -> full-screen sheet with large tap targets.
  *
  * Conversion choice: WhatsApp button always visible on desktop AND mobile.
  * Even when the sheet is closed, the user can tap-to-buy.
@@ -38,21 +38,21 @@ export default function Navbar() {
         fixed inset-x-0 top-0 z-40
         transition-all duration-300
         ${
-          scrolled
-            ? 'bg-brand-cream/85 backdrop-blur-lg border-b border-brand-coffee/10 shadow-soft'
+          scrolled || open
+            ? 'bg-brand-cream/90 backdrop-blur-lg border-b border-brand-coffee/10 shadow-soft'
             : 'bg-transparent border-b border-transparent'
         }
       `}
       style={{ height: 'var(--header-h)' }}
     >
-      <div className="container-x h-full flex items-center justify-between gap-4">
+      <div className="container-x h-full flex items-center justify-between gap-3">
         {/* Logo */}
         <a
           href="#top"
-          className="inline-flex items-center text-brand-ink"
+          className="inline-flex items-center text-brand-ink min-h-12 -ml-1 px-1"
           aria-label="BRIG Coffee — inicio"
         >
-          <Logo variant="wordmark" className="h-7 w-auto" />
+          <Logo variant="wordmark" className="h-6 sm:h-7 w-auto" />
         </a>
 
         {/* Desktop nav */}
@@ -75,7 +75,7 @@ export default function Navbar() {
             href={waLink}
             external
             icon={<WhatsAppIcon className="h-4 w-4" />}
-            className="hidden sm:inline-flex"
+            className="hidden xs:inline-flex !min-h-11"
           >
             Pedir
           </Button>
@@ -84,7 +84,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full text-brand-ink hover:bg-brand-ink/5 transition-colors"
+            className="md:hidden inline-flex items-center justify-center h-11 w-11 rounded-full text-brand-ink hover:bg-brand-ink/5 transition-colors"
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={open}
           >
@@ -102,8 +102,8 @@ export default function Navbar() {
           ${open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}
         `}
       >
-        <nav className="container-x py-8 flex flex-col gap-1">
-          {footer.navLinks.map((l) => (
+        <nav className="container-x py-6 flex flex-col gap-1">
+          {footer.navLinks.map((l, i) => (
             <a
               key={l.href}
               href={l.href}
@@ -111,8 +111,12 @@ export default function Navbar() {
               className="
                 py-4 text-2xl font-display font-bold text-brand-ink
                 border-b border-brand-coffee/10
-                transition-colors hover:text-brand-coffee
+                transition-all duration-300
+                hover:text-brand-coffee hover:translate-x-1
               "
+              style={{
+                transitionDelay: open ? `${i * 40}ms` : '0ms',
+              }}
             >
               {l.label}
             </a>
@@ -123,7 +127,7 @@ export default function Navbar() {
             href={waLink}
             external
             icon={<WhatsAppIcon />}
-            className="mt-6"
+            className="mt-6 !min-h-14"
             onClick={() => setOpen(false)}
           >
             Pedir por WhatsApp

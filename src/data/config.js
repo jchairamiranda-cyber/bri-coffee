@@ -57,6 +57,8 @@ export const whatsappTemplates = {
     'Hola BRIG! Quiero pedir un *{{product}}* {{intensity}} ☕ ¿Lo tienen disponible?',
   menuExplore:
     'Hola BRIG! Estoy viendo el menú en la web y me gustaría que me recomienden algo ✨',
+  contact:
+    'Hola BRIG! Vi su web y me gustaría saber más ✨',
 };
 
 /**

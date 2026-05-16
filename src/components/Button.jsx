@@ -16,10 +16,16 @@
 const VARIANTS = {
   primary:
     'bg-brand-ink text-brand-cream hover:bg-brand-coffee active:bg-brand-espresso',
+  caramel:
+    'bg-brand-caramel text-brand-ink hover:bg-[#B88A57] active:bg-[#A07647] shadow-soft',
+  cream:
+    'bg-brand-cream text-brand-ink hover:bg-white active:bg-brand-paper shadow-soft',
   whatsapp:
     'bg-[#25D366] text-white hover:bg-[#1FBA57] active:bg-[#178A41] shadow-soft',
   secondary:
     'bg-transparent text-brand-ink border border-brand-ink hover:bg-brand-ink hover:text-brand-cream',
+  outlineLight:
+    'bg-transparent text-brand-cream border border-brand-cream/30 hover:bg-brand-cream/10',
   ghost:
     'bg-transparent text-brand-ink hover:bg-brand-ink/5',
 };

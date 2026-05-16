@@ -1,193 +1,95 @@
-import { useState } from 'react';
-import { useWhatsApp } from '@/hooks/useWhatsApp';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import Button, { WhatsAppIcon } from './Button';
 
 /**
- * ProductCard — single product on the menu.
+ * ProductCard — catalog mode (brand landing, NOT e-commerce).
  *
- * Conversion-focused features:
- *  - Highlight badge surfaces top sellers / specialties
- *  - "fire" tone (most-sold) gets an extra subtle ring + warm glow
- *  - User picks intensity (suave/intenso) before pressing CTA
- *  - CTA generates WhatsApp link with the EXACT product + intensity prefilled
+ * Shows the product as an elegant menu item with:
+ *  - Name (bold)
+ *  - Optional badge (subtle, single chip)
+ *  - Description (short emotional copy)
+ *  - Suave / Intenso prices side-by-side as plain labels
  *
- * Mobile-first:
- *  - Tap targets ≥ 48px (intensity toggles, CTA)
- *  - Prices always visible above the fold of the card
- *  - Large, bold pricing for instant scannability
+ * No CTA button, no intensity toggle. Conversion-style affordances were
+ * intentionally removed per brand-landing direction.
  */
-
-const TONE_STYLES = {
-  fire:   { bg: 'bg-[#FFF1E6]', text: 'text-[#C2410C]', icon: '🔥', accentRing: true },
-  energy: { bg: 'bg-[#FEF3C7]', text: 'text-[#92400E]', icon: '⚡' },
-  mind:   { bg: 'bg-[#EDE9FE]', text: 'text-[#5B21B6]', icon: '🧠' },
-  detox:  { bg: 'bg-[#DCFCE7]', text: 'text-[#166534]', icon: '🌿' },
-  cool:   { bg: 'bg-[#DBEAFE]', text: 'text-[#1E40AF]', icon: '❄️' },
-  value:  { bg: 'bg-brand-paper', text: 'text-brand-coffee', icon: '💎' },
-  cream:  { bg: 'bg-brand-milk',  text: 'text-brand-coffee', icon: '✨' },
-};
-
 export default function ProductCard({ producto, index = 0 }) {
-  const [intensidad, setIntensidad] = useState('suave');
-  const { openProduct } = useWhatsApp();
-
-  // Stagger reveal — gives the grid a polished cascade feel
-  const ref = useScrollReveal({ delay: Math.min(index * 60, 360) });
-
-  const precio = intensidad === 'intenso' ? producto.intenso : producto.suave;
-  const tone = producto.destacado
-    ? TONE_STYLES[producto.destacado.tone] || TONE_STYLES.fire
-    : null;
-  const isHero = tone?.accentRing; // bestseller gets premium treatment
-
-  const link = openProduct({
-    producto: producto.nombre,
-    intensidad,
-  });
+  const ref = useScrollReveal({ delay: Math.min(index * 50, 300) });
 
   return (
     <article
       ref={ref}
-      className={`
+      className="
         reveal
-        group relative flex flex-col
+        group relative
         bg-brand-milk
-        border rounded-2xl
+        border border-brand-coffee/10
+        rounded-2xl
         p-5 sm:p-6
-        shadow-soft
         transition-all duration-300 ease-out
-        will-change-transform
-        hover:-translate-y-1 hover:shadow-cardHover
-        ${
-          isHero
-            ? 'border-[#F0B27A]/60 ring-1 ring-[#F0B27A]/30'
-            : 'border-brand-coffee/10 hover:border-brand-coffee/25'
-        }
-      `}
+        hover:-translate-y-0.5 hover:border-brand-coffee/25 hover:shadow-card
+      "
     >
-      {/* Subtle warm glow for hero card */}
-      {isHero && (
-        <div
-          aria-hidden
-          className="absolute -inset-px rounded-2xl pointer-events-none
-            bg-[radial-gradient(closest-side,rgba(240,178,122,0.18),transparent_70%)]
-            opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        />
-      )}
-
       {/* Badge */}
-      {producto.destacado && tone && (
+      {producto.destacado && (
         <span
-          className={`
-            absolute -top-3 left-5
+          className="
             inline-flex items-center gap-1
-            text-[11px] font-bold uppercase tracking-wide
-            ${tone.bg} ${tone.text}
-            px-2.5 py-1 rounded-full
-            ring-1 ring-inset ring-current/15
-            shadow-sm
-          `}
+            text-[10px] font-semibold uppercase tracking-[0.18em]
+            text-brand-mocha
+            mb-3
+          "
         >
-          <span aria-hidden>{tone.icon}</span>
+          <span
+            aria-hidden
+            className="h-1 w-1 rounded-full bg-brand-caramel"
+          />
           {producto.destacado.label}
         </span>
       )}
 
-      {/* Header: name + price */}
-      <header className="flex items-start justify-between gap-3 mb-2 relative">
-        <h3 className="font-display font-bold text-lg sm:text-xl text-brand-ink leading-tight">
+      {/* Header: name + size hint */}
+      <header className="mb-2 flex items-baseline gap-2">
+        <h4 className="font-display font-bold text-lg sm:text-xl text-brand-ink leading-tight">
           {producto.nombre}
-          {producto.size === 'grande' && (
-            <span className="ml-1.5 text-xs font-medium text-brand-mocha align-middle">
-              · Grande
-            </span>
-          )}
-        </h3>
-        <div className="text-right shrink-0">
-          <div
-            className="font-display font-black text-[28px] sm:text-3xl text-brand-ink leading-none tabular-nums transition-colors"
-            aria-live="polite"
-          >
-            <span className="text-base font-semibold text-brand-mocha mr-0.5">
-              Bs
-            </span>
-            {precio}
-          </div>
-        </div>
+        </h4>
+        {producto.size === 'grande' && (
+          <span className="text-xs font-medium text-brand-mocha">· Grande</span>
+        )}
       </header>
 
       {/* Description */}
       {producto.descripcion && (
-        <p className="text-sm text-brand-coffee/75 leading-relaxed mb-4 relative">
+        <p className="text-sm text-brand-coffee/70 leading-relaxed mb-4">
           {producto.descripcion}
         </p>
       )}
 
-      {/* Intensity toggle */}
-      <div className="mt-auto relative">
-        <div
-          role="radiogroup"
-          aria-label="Elige intensidad"
-          className="flex p-1 bg-brand-paper rounded-full mb-3"
-        >
-          <IntensityOption
-            value="suave"
-            current={intensidad}
-            onChange={setIntensidad}
-            label="Suave"
-            price={producto.suave}
-          />
-          <IntensityOption
-            value="intenso"
-            current={intensidad}
-            onChange={setIntensidad}
-            label="Intenso"
-            price={producto.intenso}
-          />
+      {/* Prices — Suave / Intenso side by side */}
+      <dl className="flex items-end gap-5 pt-3 border-t border-brand-coffee/10">
+        <div className="flex flex-col gap-0.5">
+          <dt className="text-[10px] font-semibold uppercase tracking-wider text-brand-mocha">
+            Suave
+          </dt>
+          <dd className="font-display font-bold text-lg text-brand-ink tabular-nums">
+            <span className="text-xs font-semibold text-brand-mocha mr-0.5">
+              Bs
+            </span>
+            {producto.suave}
+          </dd>
         </div>
-
-        {/* CTA */}
-        <Button
-          variant="whatsapp"
-          size="md"
-          href={link}
-          external
-          icon={<WhatsAppIcon className="h-4 w-4" />}
-          className="w-full !min-h-12"
-        >
-          Pedir {producto.nombre}
-        </Button>
-      </div>
+        <span aria-hidden className="h-6 w-px bg-brand-coffee/15 mb-1" />
+        <div className="flex flex-col gap-0.5">
+          <dt className="text-[10px] font-semibold uppercase tracking-wider text-brand-mocha">
+            Intenso
+          </dt>
+          <dd className="font-display font-bold text-lg text-brand-ink tabular-nums">
+            <span className="text-xs font-semibold text-brand-mocha mr-0.5">
+              Bs
+            </span>
+            {producto.intenso}
+          </dd>
+        </div>
+      </dl>
     </article>
-  );
-}
-
-function IntensityOption({ value, current, onChange, label, price }) {
-  const active = current === value;
-  return (
-    <button
-      type="button"
-      role="radio"
-      aria-checked={active}
-      onClick={() => onChange(value)}
-      className={`
-        flex-1 flex items-center justify-center gap-1.5
-        text-xs sm:text-sm font-semibold
-        rounded-full
-        min-h-11 px-3
-        transition-all duration-300 ease-out
-        ${
-          active
-            ? 'bg-brand-ink text-brand-cream shadow-sm scale-[1.02]'
-            : 'text-brand-coffee/70 hover:text-brand-ink active:scale-95'
-        }
-      `}
-    >
-      <span>{label}</span>
-      <span className={`tabular-nums ${active ? 'opacity-90' : 'opacity-60'}`}>
-        Bs {price}
-      </span>
-    </button>
   );
 }

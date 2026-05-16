@@ -4,21 +4,23 @@ import { buildWhatsAppLink, whatsappTemplates } from '@/data/config';
 /**
  * useWhatsApp — composes WhatsApp URLs with optional pre-filled messages.
  *
+ * Brand-led mode: prefer `openContact` (soft, neutral message) over `openProduct`
+ * (transactional). Both still available for flexibility.
+ *
  * Usage:
- *   const { link, openProduct, openGeneric } = useWhatsApp();
- *
- *   <a href={openProduct({ producto: 'Cordyceps', intensidad: 'intenso' })}>
- *     Pedir
- *   </a>
- *
- *   // Or imperative:
- *   <button onClick={() => openGeneric()}>Hablanos</button>
+ *   const { openContact } = useWhatsApp();
+ *   <a href={openContact()}>Escribinos</a>
  */
 export function useWhatsApp() {
   /** Generic link (no message) */
   const link = buildWhatsAppLink();
 
-  /** Generic order — uses default template */
+  /** Soft "let's talk" message — brand mode default */
+  const openContact = useCallback(() => {
+    return buildWhatsAppLink(whatsappTemplates.contact);
+  }, []);
+
+  /** Generic order — uses the original template */
   const openGeneric = useCallback(() => {
     return buildWhatsAppLink(whatsappTemplates.generic);
   }, []);
@@ -41,5 +43,12 @@ export function useWhatsApp() {
     return buildWhatsAppLink(message);
   }, []);
 
-  return { link, openGeneric, openProduct, openExplore, openCustom };
+  return {
+    link,
+    openContact,
+    openGeneric,
+    openProduct,
+    openExplore,
+    openCustom,
+  };
 }

@@ -1,26 +1,39 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import ProductCard from '@/components/ProductCard';
 import { menu } from '@/data/menu';
-import { menuSection } from '@/data/content';
+import { menuShowcase } from '@/data/content';
 
 /**
- * Menu — main browsing surface.
+ * Menu — visual catalog (brand-mode, no ordering CTAs).
  *
- * UX choices:
- *  - Filters limited to actual categories (Caliente / Frío / Con leche).
- *  - Default category is the first one (Caliente) — no "Todos" overload.
- *  - Filter bar is sticky just under the navbar so users always know where
- *    they are while scrolling a category. Snap-scrolls horizontally on mobile.
- *  - Card grid: 1 col mobile, 2 tablet, 3 desktop. Keeps prices scannable.
- *  - Each card lets the user pick intensity BEFORE pressing the WhatsApp CTA,
- *    so the prefilled message arrives correctly = fewer back-and-forth msgs.
+ * Three categories shown via tabs. Each tab anchors a sub-section so the
+ * 3 category cards in the Categories section can deep-link to a specific tab.
+ *
+ * On hash change (#menu-caliente / #menu-frio / #menu-con-leche) the matching
+ * tab activates and scrolls into view.
  */
 export default function Menu() {
-  // Default to first category — no "Todos" option.
   const [active, setActive] = useState(menu[0].slug);
-
   const categorias = useMemo(() => menu, []);
+
+  // React to hash anchors from Categories section
+  useEffect(() => {
+    const apply = () => {
+      const h = (window.location.hash || '').replace('#menu-', '');
+      const match = menu.find((c) => c.slug === h);
+      if (match) {
+        setActive(match.slug);
+        // Smooth scroll to the menu section
+        const node = document.getElementById('menu');
+        node?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+    apply();
+    window.addEventListener('hashchange', apply);
+    return () => window.removeEventListener('hashchange', apply);
+  }, []);
+
   const visible = useMemo(
     () => menu.find((c) => c.slug === active) || menu[0],
     [active]
@@ -29,53 +42,38 @@ export default function Menu() {
   return (
     <section
       id="menu"
-      className="relative pt-14 pb-20 sm:pt-20 sm:pb-28 bg-brand-cream"
+      className="relative py-16 sm:py-24 lg:py-28 bg-brand-paper"
     >
       <div className="container-x">
         <SectionTitle
-          eyebrow={menuSection.eyebrow}
-          headline={menuSection.headline}
-          description={menuSection.description.split('*').map((part, i) =>
-            i % 2 === 1 ? (
-              <strong key={i} className="text-brand-ink font-semibold">
-                {part}
-              </strong>
-            ) : (
-              part
-            )
-          )}
+          eyebrow={menuShowcase.eyebrow}
+          headline={menuShowcase.headline}
+          description={menuShowcase.description}
           align="center"
-          className="mb-8 sm:mb-12"
+          className="mb-10 sm:mb-14"
         />
 
-        {/* Sticky category filter — mobile-friendly horizontal scroll */}
+        {/* Tabs — refined for catalog (sticky just below navbar) */}
         <div
           role="tablist"
-          aria-label={menuSection.filtersLabel}
+          aria-label="Categorías del menú"
           className="
             sticky top-[var(--header-h)] z-20
-            -mx-5 sm:mx-0
-            px-5 sm:px-0
+            -mx-4 sm:mx-0
+            px-4 sm:px-0
             py-3
             mb-8 sm:mb-12
-            bg-brand-cream/90 backdrop-blur-md
+            bg-brand-paper/90 backdrop-blur-md
             border-y border-brand-coffee/10 sm:border-0
           "
         >
-          <div
-            className="
-              flex gap-2 sm:gap-3
-              overflow-x-auto scrollbar-none
-              snap-x snap-mandatory
-              sm:justify-center sm:overflow-visible
-              -mx-1 px-1
-            "
-          >
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-none snap-x sm:justify-center sm:overflow-visible">
             {categorias.map((c) => {
               const isActive = c.slug === active;
               return (
                 <button
                   key={c.slug}
+                  id={`menu-${c.slug}`}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
@@ -116,51 +114,45 @@ export default function Menu() {
         </div>
 
         {/* Active category */}
-        <CategoryBlock category={visible} />
+        <div key={visible.slug} className="animate-fade-up">
+          <header className="flex items-baseline gap-3 mb-6 sm:mb-8">
+            <span aria-hidden className="text-3xl sm:text-4xl">
+              {visible.icon}
+            </span>
+            <div>
+              <h3 className="font-display font-black text-2xl sm:text-3xl text-brand-ink leading-none">
+                {visible.categoria}
+              </h3>
+              <p className="text-sm text-brand-coffee/70 mt-1.5 max-w-md">
+                {visible.description}
+              </p>
+            </div>
+          </header>
 
-        {/* Suave/Intenso explainer */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {visible.productos.map((p, i) => (
+              <ProductCard key={p.id} producto={p} index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* Suave/Intenso reminder (subtle) */}
         <div className="
-          mt-14 sm:mt-20
+          mt-14 sm:mt-16
           mx-auto max-w-3xl
           p-5 sm:p-6
           bg-brand-milk
           border border-brand-coffee/10
           rounded-2xl
-          text-sm text-brand-coffee/80
+          text-sm text-brand-coffee/80 text-center
         ">
           <p>
-            <strong className="text-brand-ink font-semibold">Suave</strong> = preparado con media dosis (ligero y sutil).
+            <strong className="text-brand-ink font-semibold">Suave</strong> = media dosis · sabor sutil.
             <span className="divider-dot" />
-            <strong className="text-brand-ink font-semibold">Intenso</strong> = preparado con dosis completa (más sabor y efecto).
+            <strong className="text-brand-ink font-semibold">Intenso</strong> = dosis completa · todo el efecto.
           </p>
         </div>
       </div>
     </section>
-  );
-}
-
-function CategoryBlock({ category }) {
-  return (
-    <div key={category.slug} className="animate-fade-up">
-      <header className="flex items-baseline gap-3 mb-6 sm:mb-8">
-        <span aria-hidden className="text-3xl sm:text-4xl">
-          {category.icon}
-        </span>
-        <div>
-          <h3 className="font-display font-black text-2xl sm:text-3xl text-brand-ink leading-none">
-            {category.categoria}
-          </h3>
-          <p className="text-sm text-brand-coffee/70 mt-1.5 max-w-md">
-            {category.description}
-          </p>
-        </div>
-      </header>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        {category.productos.map((p, i) => (
-          <ProductCard key={p.id} producto={p} index={i} />
-        ))}
-      </div>
-    </div>
   );
 }

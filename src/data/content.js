@@ -6,117 +6,120 @@
  *   2. Easy to A/B test (swap a constant).
  *   3. Future i18n-ready (turn into a function later).
  *
- * Headlines provided as alternatives — change `hero.headline` to swap.
+ * Strategy: brand-led, NOT transactional. Copy is designed to build
+ * desire and emotional connection, not push orders.
  * --------------------------------------------------------------
  */
 
 export const hero = {
-  eyebrow: 'Café funcional · San Julián',
-
-  // Three options — currently using #1. Change export to switch.
-  headlineOptions: [
-    'Cada café, una experiencia que te despierta diferente.',
-    'Café funcional con DXN. Energía real, sin fórmulas mágicas.',
-    'Tu café favorito. Ahora con beneficios reales para tu cuerpo.',
+  // Two-tone headline. The first part stays in ink/cream, `accent` part is highlighted.
+  headlineLines: [
+    { text: 'No es solo café.', tone: 'ink' },
+    { text: 'Es energía real.', tone: 'accent' },
   ],
-  headline: 'Cada café, una experiencia que te despierta diferente.',
-
   subheadline:
-    'Cappuccinos preparados al momento con ingredientes funcionales DXN. Suaves o intensos, a tu medida — pedís y lo tenés listo en minutos.',
+    'Cappuccinos funcionales con ingredientes naturales que elevan tu día.',
 
-  // CTA labels
-  ctaPrimary: 'Pedir por WhatsApp',
-  ctaSecondary: 'Ver el menú',
-
-  // Quick highlights below hero
+  // Small icons row below the subheadline
   highlights: [
-    { label: 'Recién preparado', icon: '☕' },
-    { label: 'Suave o intenso', icon: '⚡' },
-    { label: '100% DXN', icon: '🌿' },
+    { label: 'Energía natural', icon: 'energy' },
+    { label: 'Enfoque', icon: 'brain' },
+    { label: 'Bienestar', icon: 'leaf' },
+  ],
+
+  ctaPrimary: 'Conoce nuestro menú',
+  ctaPrimaryHref: '#menu',
+};
+
+export const categoriesSection = {
+  eyebrow: 'Elige tu estilo',
+  headline: 'Explora nuestras categorías',
+  // The arrow CTAs on each card link to the menu anchor with the slug
+  cardCtaLabel: 'Ver',
+};
+
+export const intensity = {
+  eyebrow: 'Tú eliges',
+  headline: 'Suave o Intenso',
+  subheadline: 'Cada bebida, en la intensidad que va contigo.',
+  options: [
+    {
+      key: 'suave',
+      label: 'Suave',
+      lines: ['Media dosis', 'Sabor sutil'],
+    },
+    {
+      key: 'intenso',
+      label: 'Intenso',
+      lines: ['Dosis completa', 'Todo el efecto.'],
+    },
   ],
 };
 
-export const menuSection = {
-  eyebrow: 'Menú completo',
-  headline: 'Elegí tu café. Elegí tu intensidad.',
+export const ingredientsSection = {
+  eyebrow: 'Ingredientes que transforman',
+  headline: 'Funcionalidad en cada taza',
+};
+
+export const menuShowcase = {
+  eyebrow: 'Carta completa',
+  headline: 'Todo lo que preparamos',
   description:
-    'Cada bebida se prepara en dos versiones. *Suave* con media dosis para un sabor sutil. *Intenso* con dosis completa para todo el efecto.',
-  filtersLabel: 'Filtrar por categoría',
+    'Cada bebida está disponible en versión suave o intensa. Los precios son referenciales.',
 };
 
-export const about = {
-  eyebrow: '¿Por qué DXN?',
-  headline: 'No es solo café. Es café con propósito.',
+export const brandStory = {
+  eyebrow: 'Más que café',
+  headline: 'Somos BRIG',
   paragraphs: [
-    'DXN es una empresa pionera mundial en cultivo orgánico de Ganoderma (Reishi), Cordyceps, Espirulina y otros superalimentos. Sus extractos se integran a cada uno de nuestros cappuccinos sin alterar el sabor que ya amás.',
-    'El resultado: un café que disfrutás igual o mejor, pero que además aporta energía limpia, antioxidantes y nutrientes funcionales con cada taza.',
+    'Combinamos lo mejor del café con ingredientes funcionales DXN para ofrecerte bebidas que no solo saben bien, también te hacen bien.',
   ],
-  benefits: [
-    {
-      title: 'Energía sostenida',
-      desc: 'Sin el bajón del café común. Cordyceps y Ganoderma estabilizan tu energía durante horas.',
-      icon: 'energy',
-    },
-    {
-      title: 'Antioxidantes reales',
-      desc: 'Espirulina y Reishi neutralizan radicales libres y apoyan tu sistema inmune.',
-      icon: 'shield',
-    },
-    {
-      title: 'Claridad mental',
-      desc: 'Melena de León estimula factores de crecimiento neuronal. Foco que se nota.',
-      icon: 'brain',
-    },
-    {
-      title: 'Cultivo orgánico',
-      desc: 'Ingredientes certificados orgánicamente, libres de pesticidas y aditivos.',
-      icon: 'leaf',
-    },
-  ],
-};
-
-export const differentiators = {
-  eyebrow: 'Por qué BRIG',
-  headline: 'Lo que nos hace diferentes.',
-  items: [
+  pillars: [
     {
       title: 'Preparado al momento',
-      desc: 'Cada bebida se prepara cuando la pedís. Nada de termos, nada de pre-hecho. Calidad en cada sorbo.',
-      icon: 'clock',
+      icon: 'cup',
     },
     {
-      title: 'Vos elegís la intensidad',
-      desc: 'Suave para una experiencia ligera. Intenso para todo el sabor y efecto. Tu café, tu medida.',
-      icon: 'tune',
+      title: 'Ingredientes de calidad',
+      icon: 'leaf',
     },
     {
-      title: 'Ingredientes funcionales',
-      desc: 'Ganoderma, Cordyceps, Espirulina, Melena de León. Súper alimentos en cada taza.',
-      icon: 'mushroom',
-    },
-    {
-      title: 'Hecho en San Julián',
-      desc: 'Negocio local, atendido con cariño. Apoyás a tu comunidad con cada pedido.',
-      icon: 'pin',
+      title: 'Hecho con pasión',
+      icon: 'heart',
     },
   ],
 };
 
-export const location = {
-  eyebrow: 'Visitanos',
-  headline: 'Dónde encontrarnos.',
-  ctaText: 'Pedir ahora por WhatsApp',
-  delivery:
-    'También coordinamos pedidos por WhatsApp. Escribinos antes de pasar y lo tenés listo.',
+export const infoBar = {
+  ubicacion: {
+    icon: 'pin',
+    eyebrow: 'Ubícanos',
+    body: 'San Julián, Santa Cruz, Bolivia',
+    ctaLabel: 'Ver en mapa',
+  },
+  horario: {
+    icon: 'clock',
+    eyebrow: 'Horario',
+    days: 'Lunes a Domingo',
+    time: '08:00 – 18:00',
+  },
+  social: {
+    icon: 'tiktok',
+    eyebrow: 'Síguenos',
+    handle: 'TikTok: bri DXN',
+    ctaLabel: 'Ir a TikTok',
+  },
 };
 
 export const footer = {
-  tagline: 'Café funcional preparado al momento.',
+  tagline: 'Café funcional. Energía real. Hecho para ti.',
   rights: 'Todos los derechos reservados.',
+  // Used by navbar AND footer
   navLinks: [
+    { label: 'Inicio', href: '#inicio' },
+    { label: 'Nuestro café', href: '#nuestro-cafe' },
     { label: 'Menú', href: '#menu' },
-    { label: 'Sobre DXN', href: '#dxn' },
-    { label: 'Por qué BRIG', href: '#diferencial' },
+    { label: 'Sobre BRIG', href: '#sobre-brig' },
     { label: 'Ubicación', href: '#ubicacion' },
   ],
 };
